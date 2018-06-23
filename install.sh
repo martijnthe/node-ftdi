@@ -1,10 +1,12 @@
 #!/bin/bash
 
+set -e
+
 FTDI_LINUX_LINK='http://www.ftdichip.com/Drivers/D2XX/Linux/libftd2xx1.1.12.tar.gz'
 FTDI_LINUX_RPI='https://github.com/sim-san/node-ftdi/raw/master/libftd2xx1.1.12.RPi_Fix.tar.gz'
-FTDI_MAC_LINK='http://www.ftdichip.com/Drivers/D2XX/MacOSX/D2XX1.2.2.dmg'
+FTDI_MAC_LINK='http://www.ftdichip.com/Drivers/D2XX/MacOSX/D2XX1.4.4.dmg'
 LIB_VERSION_LINUX='1.1.12'
-LIB_VERSION_MAC='1.2.2'
+LIB_VERSION_MAC='1.4.4'
 
 echo Detected OS:
 
@@ -76,10 +78,10 @@ elif [ "$ostype" ==  "mac" ]
 then
    hdiutil attach $filename
    mkdir -p /usr/local/include
-   cp /Volumes/release/D2XX/bin/10.5-10.7/libftd2xx.$LIB_VERSION.dylib /usr/local/lib/libftd2xx.$LIB_VERSION.dylib
+   cp /Volumes/release/D2XX/libftd2xx.$LIB_VERSION.dylib /usr/local/lib/libftd2xx.$LIB_VERSION.dylib
    ln -sf /usr/local/lib/libftd2xx.$LIB_VERSION.dylib /usr/local/lib/libftd2xx.dylib
-   cp /Volumes/release/D2XX/Samples/ftd2xx.h /usr/local/include/ftd2xx.h
-   cp /Volumes/release/D2XX/Samples/WinTypes.h /usr/local/include/WinTypes.h
+   cp /Volumes/release/D2XX/ftd2xx.h /usr/local/include/ftd2xx.h
+   cp /Volumes/release/D2XX/WinTypes.h /usr/local/include/WinTypes.h
    rm $filename
    hdiutil detach /Volumes/release
    xcode-select -v
