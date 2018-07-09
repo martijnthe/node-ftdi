@@ -110,6 +110,10 @@ DeviceListBaton* FindAllAsync(int vid, int pid)
         FT_ListDevices((PVOID)i, listBaton->devInfo[i].SerialNumber, FT_LIST_BY_INDEX | FT_OPEN_BY_SERIAL_NUMBER);
         FT_ListDevices((PVOID)i, listBaton->devInfo[i].Description, FT_LIST_BY_INDEX | FT_OPEN_BY_DESCRIPTION);
         FT_ListDevices((PVOID)i, &listBaton->devInfo[i].LocId, FT_LIST_BY_INDEX | FT_OPEN_BY_LOCATION);
+        // Work-around for ID field not getting set when using custom VID/PID:
+        if (listBaton->devInfo[i].ID == 0) {
+          listBaton->devInfo[i].ID = (vid << 16) | pid;
+        }
         uv_mutex_unlock(&libraryMutex);
       }
     }
