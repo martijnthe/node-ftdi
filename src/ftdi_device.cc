@@ -12,8 +12,12 @@
 #include "ftdi_driver.h"
 
 #ifndef WIN32
-    #include <unistd.h>
-    #include <time.h>
+    #ifdef __APPLE__
+        #include <sys/time.h>
+    #else
+        #include <unistd.h>
+        #include <time.h>
+    #endif
 #else
     #include <windows.h>
 #endif
